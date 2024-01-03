@@ -6,7 +6,7 @@ namespace ExemploConsoleSQLServer
 {
     class Program
     {
-        static readonly string connectionString = "Data Source=.\\sqldeveloper;Initial Catalog=PROJETOSAV;Integrated Security=True;TrustServerCertificate=true;";
+        static readonly string connectionString = "Data Source=.\\sqldeveloper;Initial Catalog=DESCOMPLICARROS;Integrated Security=True;TrustServerCertificate=true;";
 
         static void Main(string[] args)
         {
@@ -60,7 +60,7 @@ namespace ExemploConsoleSQLServer
         static void ExibirMenuOperacoes()
         {
             EscreverMensagem("1. Gerenciar usuários", false);
-            EscreverMensagem("2. Gerenciar tipos de usuários", false);
+            EscreverMensagem("2. Gerenciar perfis de usuários", false);
             EscreverMensagem("3. Gerenciar marcas montadoras", false);
             EscreverMensagem("4. Gerenciar modelos", false);
             EscreverMensagem("5. Gerenciar tipos de carrocerias", false);
@@ -219,9 +219,9 @@ namespace ExemploConsoleSQLServer
 
         private static void CriarNovoUsuario()
         {
-            EscreverMensagem("Certo, agora informe o id do tipo de usuario que seja criar");
+            EscreverMensagem("Certo, agora informe o id do perfil de usuario que seja criar");
 
-            string idTipoUsuario = Console.ReadLine();
+            string idPerfilUsuario = Console.ReadLine();
 
             EscreverMensagem("Certo, agora informe um nome para o usuario");
 
@@ -265,8 +265,8 @@ namespace ExemploConsoleSQLServer
                     connection.Open();
 
                     // Exemplo de consulta SELECT
-                    string query = string.Format(@"INSERT INTO USUARIOS (IdTipoUsuario, NomeUsuario, CpfUsuario, DtNascimentoUsuario, EmailUsuario, Senha, Ativo, IdUsuarioCadastro)
-                                    VALUES({0}, '{1}', '{2}', '{3}', '{4}', '{5}', {6}, {7})", idTipoUsuario, nomeUsuario, cpfUsuario, dtNascimentoUsuario, emailUsuario, senhaUsuario, 1, 1);
+                    string query = string.Format(@"INSERT INTO USUARIOS (IdPerfilUsuario, NomeUsuario, CpfUsuario, DtNascimentoUsuario, EmailUsuario, Senha, Ativo, IdUsuarioCadastro)
+                                    VALUES({0}, '{1}', '{2}', '{3}', '{4}', '{5}', {6}, {7})", idPerfilUsuario, nomeUsuario, cpfUsuario, dtNascimentoUsuario, emailUsuario, senhaUsuario, 1, 1);
 
 
                     // Crie um comando SQL e associe à conexão
@@ -328,12 +328,12 @@ namespace ExemploConsoleSQLServer
                             if (reader.HasRows)
                             {
                                 //exibir o cabeçalho
-                                EscreverMensagem("IdUsuario | IdTipoUsuario | NomeUsuario | CpfUsuario | DtNascimentoUsuario | EmailUsuario | Senha | Ativo | IdUsuarioCadastro | DtCadastro | IdUsuarioUltimaAtualizacao | DtUltimaAtualizacao");
+                                EscreverMensagem("IdUsuario | IdPerfilUsuario | NomeUsuario | CpfUsuario | DtNascimentoUsuario | EmailUsuario | Senha | Ativo | IdUsuarioCadastro | DtCadastro | IdUsuarioUltimaAtualizacao | DtUltimaAtualizacao");
                                 // Itere pelas linhas e exiba os resultados
                                 while (reader.Read())
                                 {
                                     // Supondo que há uma coluna chamada "IdUsuario" na tabela
-                                    EscreverMensagem(reader["IdUsuario"] + " | " + reader["IdTipoUsuario"] + " | " + reader["NomeUsuario"] + " | " + reader["CpfUsuario"] + " | " + reader["DtNascimentoUsuario"] + " | " + reader["EmailUsuario"] + " | " + reader["Senha"] + " | " + reader["Ativo"] + " | " + reader["IdUsuarioCadastro"] + " | " + reader["DtCadastro"] + " | " + reader["IdUsuarioUltimaAtualizacao"] + " | " + reader["DtUltimaAtualizacao"]);
+                                    EscreverMensagem(reader["IdUsuario"] + " | " + reader["IdPerfilUsuario"] + " | " + reader["NomeUsuario"] + " | " + reader["CpfUsuario"] + " | " + reader["DtNascimentoUsuario"] + " | " + reader["EmailUsuario"] + " | " + reader["Senha"] + " | " + reader["Ativo"] + " | " + reader["IdUsuarioCadastro"] + " | " + reader["DtCadastro"] + " | " + reader["IdUsuarioUltimaAtualizacao"] + " | " + reader["DtUltimaAtualizacao"]);
                                 }
                             }
                             else
@@ -383,12 +383,12 @@ namespace ExemploConsoleSQLServer
                             if (reader.HasRows)
                             {
                                 //exibir o cabeçalho
-                                EscreverMensagem("IdUsuario | IdTipoUsuario | NomeUsuario | CpfUsuario | DtNascimentoUsuario | EmailUsuario | Senha | Ativo | IdUsuarioCadastro | DtCadastro | IdUsuarioUltimaAtualizacao | DtUltimaAtualizacao");
+                                EscreverMensagem("IdUsuario | IdPerfilUsuario | NomeUsuario | CpfUsuario | DtNascimentoUsuario | EmailUsuario | Senha | Ativo | IdUsuarioCadastro | DtCadastro | IdUsuarioUltimaAtualizacao | DtUltimaAtualizacao");
                                 // Itere pelas linhas e exiba os resultados
                                 while (reader.Read())
                                 {
                                     // Supondo que há uma coluna chamada "IdUsuario" na tabela
-                                    EscreverMensagem(reader["IdUsuario"] + " | " + reader["IdTipoUsuario"] + " | " + reader["NomeUsuario"] + " | " + reader["CpfUsuario"] + " | " + reader["DtNascimentoUsuario"] + " | " + reader["EmailUsuario"] + " | " + reader["Senha"] + " | " + reader["Ativo"] + " | " + reader["IdUsuarioCadastro"] + " | " + reader["DtCadastro"] + " | " + reader["IdUsuarioUltimaAtualizacao"] + " | " + reader["DtUltimaAtualizacao"]);
+                                    EscreverMensagem(reader["IdUsuario"] + " | " + reader["IdPerfilUsuario"] + " | " + reader["NomeUsuario"] + " | " + reader["CpfUsuario"] + " | " + reader["DtNascimentoUsuario"] + " | " + reader["EmailUsuario"] + " | " + reader["Senha"] + " | " + reader["Ativo"] + " | " + reader["IdUsuarioCadastro"] + " | " + reader["DtCadastro"] + " | " + reader["IdUsuarioUltimaAtualizacao"] + " | " + reader["DtUltimaAtualizacao"]);
                                 }
                             }
                             else
