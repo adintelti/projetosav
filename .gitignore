@@ -1,0 +1,6 @@
+**/.vs/**
+**/bin/**
+**/obj/**
+**/*.csproj.user
+**/.sonarqube
+package-lock,json
