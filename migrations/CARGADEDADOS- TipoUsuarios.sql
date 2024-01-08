@@ -1,3 +1,5 @@
+USE [DESCOMPLICARROS];
+
 INSERT INTO TIPOUSUARIOS(
 NomeTipoUsuario
 ,DescricaoTipoUsuario
