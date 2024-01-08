@@ -6,7 +6,7 @@ namespace ExemploConsoleSQLServer
 {
     class Program
     {
-        static readonly string connectionString = "Data Source=.\\sqldeveloper;Initial Catalog=DESCOMPLICARROS;Integrated Security=True;TrustServerCertificate=true;";
+        static readonly string connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=DESCOMPLICARROS;Integrated Security=True;TrustServerCertificate=true;";
 
         static void Main(string[] args)
         {
@@ -74,7 +74,10 @@ namespace ExemploConsoleSQLServer
             switch (operacao)
             {
                 case "1":
-                    ExibirGestaoUsuarios(); 
+                    ExibirGestaoUsuarios();
+                    break;
+                    case "2":
+                        ExibirGestaoPerfilUsuarios();
                     break;
                 default:
                     EscreverMensagem("Opção inválida!");
@@ -92,6 +95,7 @@ namespace ExemploConsoleSQLServer
             EscreverMensagem("6. Sair", false);
 
             EscreverMensagem("Certo, agora informe a operação desejada");
+
 
             string operacao = Console.ReadLine();
 
@@ -117,106 +121,42 @@ namespace ExemploConsoleSQLServer
                     break;
             }
         }
-
-        private static void AtualizarUsuarioPorId()
+    
+        
+     private static void ExibirGestaoPerfilUsuarios()
         {
-            EscreverMensagem("Certo, agora informe o id do usuário desejado");
+            EscreverMensagem("\n1. Listar todos os perfis usuários", false);
+            EscreverMensagem("2. Buscar perfil usuário por id", false);
+            EscreverMensagem("3. Criar um novo perfil usuário", false);
+            EscreverMensagem("4. Atualizar um perfil usuário", false);
+            EscreverMensagem("5. Excluir um perfil usuário", false);
+            EscreverMensagem("6. Sair", false);
 
-            string idUsuario = Console.ReadLine();
+            EscreverMensagem("Certo, agora informe a operação desejada");
 
-            EscreverMensagem("Certo, agora informe o novo nome para o usuario");
 
-            string novoNome = Console.ReadLine();
+            string operacao = Console.ReadLine();
 
-            // Crie uma conexão com o SQL Server
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            switch (operacao)
             {
-                try
-                {
-                    // Abra a conexão
-                    connection.Open();
-
-                    // Exemplo de consulta SELECT
-                    string query = @"UPDATE USUARIOS 
-                        SET NomeUsuario = '" + novoNome +"' WHERE IdUsuario = " + idUsuario;
-
-                    // Crie um comando SQL e associe à conexão
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        int linhasAfetadas = command.ExecuteNonQuery();
-
-                        if (linhasAfetadas > 0)
-                        {
-                            EscreverMensagem("Registro atualizado com sucesso!");
-                        }
-                        else
-                        {
-                            EscreverMensagem("Nenhum dado atualizado.");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    EscreverMensagem("Erro: " + ex.Message);
-                }
-                finally
-                {
-                    // Certifique-se de fechar a conexão, independentemente do resultado
-                    if (connection.State == System.Data.ConnectionState.Open)
-                    {
-                        connection.Close();
-                    }
-                }
+                case "1":
+                    ExibirTodosPerfilUsuarios();
+                    break;
+                case "2":
+                    BuscarPerfilUsuarioPorId();
+                    break;
+                    break;
+                case "3":
+                    AtualizarPerfilUsuarioPorId();
+                    break;
+                case "4":
+                    ExcluirPerfilUsuarioPorId();
+                    break;
+                default:
+                    EscreverMensagem("Opção inválida!");
+                    break;
             }
         }
-
-        private static void ExcluirUsuarioPorId()
-        {
-            EscreverMensagem("Certo, agora informe o id do usuário desejado");
-
-            string idUsuario = Console.ReadLine();
-
-            // Crie uma conexão com o SQL Server
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    // Abra a conexão
-                    connection.Open();
-
-                    // Exemplo de consulta SELECT
-                    string query = "DELETE FROM USUARIOS WHERE IdUsuario = " + idUsuario;
-
-                    // Crie um comando SQL e associe à conexão
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        int linhasAfetadas = command.ExecuteNonQuery();
-
-                        if (linhasAfetadas > 0)
-                        {
-                            EscreverMensagem("Dados excluídos com sucesso!");
-                        }
-                        else
-                        {
-                            EscreverMensagem("Nenhum dado excluído.");
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    EscreverMensagem("Erro: " + ex.Message);
-                }
-                finally
-                {
-                    // Certifique-se de fechar a conexão, independentemente do resultado
-                    if (connection.State == System.Data.ConnectionState.Open)
-                    {
-                        connection.Close();
-                    }
-                }
-            }
-        }
-
         private static void CriarNovoUsuario()
         {
             EscreverMensagem("Certo, agora informe o id do perfil de usuario que seja criar");
@@ -299,6 +239,207 @@ namespace ExemploConsoleSQLServer
             }
         }
 
+
+
+        private static void AtualizarUsuarioPorId()
+        {
+            EscreverMensagem("Certo, agora informe o id do usuário desejado");
+
+            string idUsuario = Console.ReadLine();
+
+            EscreverMensagem("Certo, agora informe o novo nome para o usuario");
+
+            string novoNome = Console.ReadLine();
+
+            // Crie uma conexão com o SQL Server
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    // Abra a conexão
+                    connection.Open();
+
+                    // Exemplo de consulta SELECT
+                    string query = @"UPDATE USUARIOS 
+                        SET NomeUsuario = '" + novoNome + "' WHERE IdUsuario = " + idUsuario;
+
+                    // Crie um comando SQL e associe à conexão
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        int linhasAfetadas = command.ExecuteNonQuery();
+
+                        if (linhasAfetadas > 0)
+                        {
+                            EscreverMensagem("Registro atualizado com sucesso!");
+                        }
+                        else
+                        {
+                            EscreverMensagem("Nenhum dado atualizado.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    EscreverMensagem("Erro: " + ex.Message);
+                }
+                finally
+                {
+                    // Certifique-se de fechar a conexão, independentemente do resultado
+                    if (connection.State == System.Data.ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+        private static void AtualizarPerfilUsuarioPorId()
+        {
+            EscreverMensagem("Certo, agora informe o id do perfil usuário desejado");
+
+            string idPerfilUsuario = Console.ReadLine();
+
+            EscreverMensagem("Certo, agora informe o novo nome para o perfil usuario");
+
+            string novoNomePerfil = Console.ReadLine();
+
+            // Crie uma conexão com o SQL Server
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    // Abra a conexão
+                    connection.Open();
+
+                    // Exemplo de consulta SELECT
+                    string query = @"UPDATE PERFILUSUARIOS 
+                        SET NomeUsuario = '" + novoNomePerfil + "' WHERE IdPerfilUsuario = " + idPerfilUsuario;
+
+                    // Crie um comando SQL e associe à conexão
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        int linhasAfetadas = command.ExecuteNonQuery();
+
+                        if (linhasAfetadas > 0)
+                        {
+                            EscreverMensagem("Registro atualizado com sucesso!");
+                        }
+                        else
+                        {
+                            EscreverMensagem("Nenhum dado atualizado.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    EscreverMensagem("Erro: " + ex.Message);
+                }
+                finally
+                {
+                    // Certifique-se de fechar a conexão, independentemente do resultado
+                    if (connection.State == System.Data.ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+
+        private static void ExcluirUsuarioPorId()
+        {
+            EscreverMensagem("Certo, agora informe o id do usuário desejado");
+
+            string idUsuario = Console.ReadLine();
+
+            // Crie uma conexão com o SQL Server
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    // Abra a conexão
+                    connection.Open();
+
+                    // Exemplo de consulta SELECT
+                    string query = "DELETE FROM USUARIOS WHERE IdUsuario = " + idUsuario;
+
+                    // Crie um comando SQL e associe à conexão
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        int linhasAfetadas = command.ExecuteNonQuery();
+
+                        if (linhasAfetadas > 0)
+                        {
+                            EscreverMensagem("Dados excluídos com sucesso!");
+                        }
+                        else
+                        {
+                            EscreverMensagem("Nenhum dado excluído.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    EscreverMensagem("Erro: " + ex.Message);
+                }
+                finally
+                {
+                    // Certifique-se de fechar a conexão, independentemente do resultado
+                    if (connection.State == System.Data.ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+        private static void ExcluirPerfilUsuarioPorId()
+        {
+            EscreverMensagem("Certo, agora informe o id do usuário desejado");
+
+            string idPerfilUsuario = Console.ReadLine();
+
+            // Crie uma conexão com o SQL Server
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    // Abra a conexão
+                    connection.Open();
+
+                    // Exemplo de consulta SELECT
+                    string query = "DELETE FROM PERFILUSUARIOS WHERE IdPerfilUsuario = " + idPerfilUsuario;
+
+                    // Crie um comando SQL e associe à conexão
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        int linhasAfetadas = command.ExecuteNonQuery();
+
+                        if (linhasAfetadas > 0)
+                        {
+                            EscreverMensagem("Dados excluídos com sucesso!");
+                        }
+                        else
+                        {
+                            EscreverMensagem("Nenhum dado excluído.");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    EscreverMensagem("Erro: " + ex.Message);
+                }
+                finally
+                {
+                    // Certifique-se de fechar a conexão, independentemente do resultado
+                    if (connection.State == System.Data.ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+
+
+
+
         private static void BuscarUsuarioPorId()
         {
             EscreverMensagem("Certo, agora informe o id do usuário desejado");
@@ -357,6 +498,64 @@ namespace ExemploConsoleSQLServer
                 }
             }
         }
+        private static void BuscarPerfilUsuarioPorId()
+        {
+            EscreverMensagem("Certo, agora informe o id do perfil usuário desejado");
+
+            string idPerfilUsuario = Console.ReadLine();
+
+            // Crie uma conexão com o SQL Server
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    // Abra a conexão
+                    connection.Open();
+
+                    //EscreverMensagem("Conexão bem-sucedida!");
+
+                    // Exemplo de consulta SELECT
+                    string query = "SELECT * FROM PERFILUSUARIOS WHERE IdPerfilUsuario = " + idPerfilUsuario;
+
+                    // Crie um comando SQL e associe à conexão
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        // Execute o comando e obtenha um leitor de dados
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            // Verifique se existem linhas retornadas
+                            if (reader.HasRows)
+                            {
+                                //exibir o cabeçalho
+                                EscreverMensagem(" IdPerfilUsuario | Ativo | IdUsuarioCadastro | DtCadastro | IdUsuarioUltimaAtualizacao | DtUltimaAtualizacao");
+                                // Itere pelas linhas e exiba os resultados
+                                while (reader.Read())
+                                {
+                                    // Supondo que há uma coluna chamada "IdUsuario" na tabela
+                                    EscreverMensagem(reader["IdPerfilUsuario"] + " | " + reader["NomePerfilUsuario"] + " | " + reader["IdUsuarioCadastro"] + " | " + reader["DtCadastro"] + " | " + reader["IdUsuarioUltimaAtualizacao"] + " | " + reader["DtUltimaAtualizacao"]);
+                                }
+                            }
+                            else
+                            {
+                                EscreverMensagem("Não foram encontradas linhas.");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    EscreverMensagem("Erro: " + ex.Message);
+                }
+                finally
+                {
+                    // Certifique-se de fechar a conexão, independentemente do resultado
+                    if (connection.State == System.Data.ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
 
         static void ExibirTodosUsuarios()
         {
@@ -372,6 +571,7 @@ namespace ExemploConsoleSQLServer
 
                     // Exemplo de consulta SELECT
                     string query = "SELECT * FROM USUARIOS";
+
 
                     // Crie um comando SQL e associe à conexão
                     using (SqlCommand command = new SqlCommand(query, connection))
@@ -389,6 +589,60 @@ namespace ExemploConsoleSQLServer
                                 {
                                     // Supondo que há uma coluna chamada "IdUsuario" na tabela
                                     EscreverMensagem(reader["IdUsuario"] + " | " + reader["IdPerfilUsuario"] + " | " + reader["NomeUsuario"] + " | " + reader["CpfUsuario"] + " | " + reader["DtNascimentoUsuario"] + " | " + reader["EmailUsuario"] + " | " + reader["Senha"] + " | " + reader["Ativo"] + " | " + reader["IdUsuarioCadastro"] + " | " + reader["DtCadastro"] + " | " + reader["IdUsuarioUltimaAtualizacao"] + " | " + reader["DtUltimaAtualizacao"]);
+                                }
+                            }
+                            else
+                            {
+                                EscreverMensagem("Não foram encontradas linhas.");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    EscreverMensagem("Erro: " + ex.Message);
+                }
+                finally
+                {
+                    // Certifique-se de fechar a conexão, independentemente do resultado
+                    if (connection.State == System.Data.ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
+        }
+        static void ExibirTodosPerfilUsuarios()
+        {
+            // Crie uma conexão com o SQL Server
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    // Abra a conexão
+                    connection.Open();
+
+                    //EscreverMensagem("Conexão bem-sucedida!");
+
+                    // Exemplo de consulta SELECT
+                    string query = "SELECT * FROM PERFILUSUARIOS";
+
+                    // Crie um comando SQL e associe à conexão
+                    using (SqlCommand command = new SqlCommand(query, connection))
+                    {
+                        // Execute o comando e obtenha um leitor de dados
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            // Verifique se existem linhas retornadas
+                            if (reader.HasRows)
+                            {
+                                //exibir o cabeçalho
+                                EscreverMensagem(" IdPerfilUsuario |NomePerfilUsuario| IdUsuarioCadastro | DtCadastro | IdUsuarioUltimaAtualizacao | DtUltimaAtualizacao");
+                                // Itere pelas linhas e exiba os resultados
+                                while (reader.Read())
+                                {
+                                    // Supondo que há uma coluna chamada "IdUsuario" na tabela
+                                    EscreverMensagem(reader["IdPerfilUsuario"] + " | " + reader["NomePerfilUsuario"] + " | " + reader["IdUsuarioCadastro"] + " | " + reader["DtCadastro"] + " | " + reader["IdUsuarioUltimaAtualizacao"] + " | " + reader["DtUltimaAtualizacao"]);
                                 }
                             }
                             else
