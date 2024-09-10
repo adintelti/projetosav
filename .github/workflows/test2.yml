@@ -1,0 +1,16 @@
+name: Workflow Simples
+
+# Permite execução manual
+on:
+  workflow_dispatch:
+
+jobs:
+  exemplo:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Passo inicial
+        run: echo "olá mundo"
+      
+      - name: Segundo passo
+        run: echo "obrigado e tchau"
